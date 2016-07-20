@@ -21,6 +21,7 @@
 ##   You might also start by listing the files in your working directory
 
 getwd() # where am I?
+setwd("/Users/rajesh/Desktop/Coursera/SpringBoardGithub/linear_regression")
 list.files("dataSets") # files in the dataSets folder
 
 ## Load the states data
@@ -132,10 +133,19 @@ coef(summary(sat.voting.mod))
 ##   1. Examine/plot the data before fitting the model
 ##   2. Print and interpret the model `summary'
 ##   3. `plot' the model to look for deviations from modeling assumptions
-
+sat.energy.mod <- lm( energy ~ metro, data = na.omit(states.data))
+summary(sat.energy.mod)
+plot(sat.energy.mod, which = c(1,2) )
 ##   Select one or more additional predictors to add to your model and
 ##   repeat steps 1-3. Is this model significantly better than the model
 ##   with /metro/ as the only predictor?
+sat.energy2.mod <- lm( energy ~ metro + percent, data = na.omit(states.data))
+summary(sat.energy2.mod)
+plot(sat.energy2.mod, which = c(1,2) )
+# RSE of 2nd model is lower. RSE provides an absolute measure of lack of fit of the model to the data  measured in the units of Y(energy)=> lower mean better 
+# R2 is a proportion - R2 near zero does not explain much of variability in the response  model is wrong or variance  is high => both have near 0 R2
+# F-stat : if the relationship is > 5, there is some relationship  between response and predictors and the second model seems better
+# Based on t statistics and Pr(|t|) both the models are equally weak  "
 
 ## Interactions and factors
 ## ══════════════════════════
@@ -148,7 +158,7 @@ coef(summary(sat.voting.mod))
 ##   For example: Does the association between expense and SAT scores
 ##   depend on the median income in the state?
 
-  #Add the interaction to the model
+#Add the interaction to the model
 sat.expense.by.percent <- lm(csat ~ expense*income,
                              data=states.data) 
 #Show the results
@@ -200,6 +210,14 @@ coef(summary(lm(csat ~ C(region, contr.helmert),
 
 ##   1. Add on to the regression equation that you created in exercise 1 by
 ##      generating an interaction term and testing the interaction.
+sat.energy.by.pop.mod <- lm( energy ~ metro*pop, data = na.omit(states.data))
+summary(sat.energy.by.pop.mod)
+plot(sat.energy.by.pop.mod, which = c(1,2) )
+
 
 ##   2. Try adding region to the model. Are there significant differences
 ##      across the four regions?
+
+coef(summary(lm(energy ~ C(region, base=4) * metro * pop,
+                data=states.data)))
+# Region 3 has high correlation to metro and population 
