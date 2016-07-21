@@ -218,6 +218,6 @@ plot(sat.energy.by.pop.mod, which = c(1,2) )
 ##   2. Try adding region to the model. Are there significant differences
 ##      across the four regions?
 
-coef(summary(lm(energy ~ C(region, base=4) * metro * pop,
+coef(summary(lm(energy ~ C(region, base=4) + (metro * pop),
                 data=states.data)))
 # Region 3 has high correlation to metro and population 
