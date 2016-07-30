@@ -146,6 +146,20 @@ plot(sat.energy2.mod, which = c(1,2) )
 # R2 is a proportion - R2 near zero does not explain much of variability in the response  model is wrong or variance  is high => both have near 0 R2
 # F-stat : if the relationship is > 5, there is some relationship  between response and predictors and the second model seems better
 # Based on t statistics and Pr(|t|) both the models are equally weak  "
+# Looks like, both models are pretty weak. Though you are getting one variable significant for each, but note that their significant(contributions) are vary less. 
+# For 'metro' it's -1.6 and for 'percent' it's -1.4. In both cases, intercept is very high, which means all contribution to R-square (or adjusted R-square) is due to intercept only. 
+ 
+#####
+# Since the model is weak
+# let us explore the interaction of all variables
+####
+sat.energy_all.mod <- lm( energy ~ pop + area +density +metro + waste + miles +toxic + green +house + senate + csat +vsat +msat + percent + expense + income + high , data = na.omit(states.data))
+summary(sat.energy_all.mod)
+plot(sat.energy_all.mod, which = c(1,2) )
+plot(sat.energy_all.mod)
+
+
+
 
 ## Interactions and factors
 ## ══════════════════════════
